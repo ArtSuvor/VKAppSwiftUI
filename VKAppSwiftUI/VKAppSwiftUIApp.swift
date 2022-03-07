@@ -11,7 +11,7 @@ import SwiftUI
 struct VKAppSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabBarView(selected: .news)
         }
     }
 }

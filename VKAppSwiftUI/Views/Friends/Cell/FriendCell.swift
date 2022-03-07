@@ -12,12 +12,14 @@ struct FriensCell: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 15)
                 .foregroundColor(.gray)
             
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
                     Text("NameFriend")
+                        .font(.system(size: 20))
+                        .shadow(color: .white, radius: 5)
                     Text("Online")
                         .font(.system(size: 13))
                         .foregroundColor(isOnline ? .green : .red)
@@ -38,7 +40,7 @@ struct FriensCell: View {
             .padding(10)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(maxWidth: .infinity, maxHeight: 50)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.clear)
     }
 }

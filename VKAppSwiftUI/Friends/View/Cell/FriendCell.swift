@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct FriensCell: View {
-    private var isOnline: Bool = false
+    private var isOnline: Bool {
+        friend.isOnline
+    }
+    let friend: FriendModel
     
     var body: some View {
         ZStack {
@@ -17,36 +20,29 @@ struct FriensCell: View {
             
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("NameFriend")
-                        .font(.system(size: 20))
+                    Text(friend.name)
+                        .font(.system(size: 17))
                         .shadow(color: .white, radius: 5)
-                    Text("Online")
-                        .font(.system(size: 13))
+                    Text(isOnline ? "Online" : "Offline")
+                        .font(.system(size: 10))
                         .foregroundColor(isOnline ? .green : .red)
                 }
                 
                 Spacer()
                 
-                Image(systemName: "plus")
+                Image(systemName: friend.image)
                     .resizable()
                     .background(
-                        RoundedRectangle(cornerRadius: 50)
-                            .frame(width: 100, height: 100)
+                        RoundedRectangle(cornerRadius: 25)
                             .foregroundColor(.white)
                             .shadow(color: .black, radius: 5)
                     )
-                    .frame(width: 100, height: 100)
+                    .frame(width: 50, height: 50)
             }
             .padding(10)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.clear)
-    }
-}
-
-struct SwiftUIView_Previews: PreviewProvider {
-    static var previews: some View {
-        FriensCell()
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.clear)
     }
 }

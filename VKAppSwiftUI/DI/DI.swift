@@ -10,11 +10,16 @@ import SwiftUI
 final class DI {
     func createTabBar() -> some View {
         TabBarView(selected: .news,
-                   friendViewModel: createFriendsViewModel())
+                   friendViewModel: createFriendsViewModel(),
+                   groupViewModel: createGroupsViewModel())
     }
     
 //MARK: - Private
     private func createFriendsViewModel() -> FriendViewModel {
         FriendViewModel()
+    }
+    
+    private func createGroupsViewModel() -> GroupViewModel {
+        GroupViewModel()
     }
 }

@@ -8,42 +8,37 @@
 import SwiftUI
 
 struct GroupCell: View {
+    let group: GroupModel
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
-                .foregroundColor(.gray)
+                .foregroundColor(Color("groupsTabColor"))
             
             HStack {
-                Image(systemName: "plus")
+                Image(systemName: group.image)
                     .resizable()
                     .background(
-                    RoundedRectangle(cornerRadius: 50)
-                        .frame(width: 100, height: 100)
+                    RoundedRectangle(cornerRadius: 25)
                         .foregroundColor(.white)
                         .shadow(color: .black, radius: 5)
                     )
-                    .frame(width: 100, height: 100)
+                    .frame(width: 50, height: 50)
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("GroupName")
-                        .font(.system(size: 25))
-                    
-                    Text("Sub")
-                        .font(.system(size: 15))
+                    Text(group.name)
+                        .font(.system(size: 17))
+                        .shadow(color: .white, radius: 5)
+                    Text("\(group.subscribers)")
+                        .font(.system(size: 10))
+                    Spacer()
                 }
-                .shadow(color: .white, radius: 5)
-                .padding(10)
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(10)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-struct GroupCell_Previews: PreviewProvider {
-    static var previews: some View {
-        GroupCell()
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.clear)
     }
 }

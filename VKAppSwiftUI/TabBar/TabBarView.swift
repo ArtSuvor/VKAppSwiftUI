@@ -22,10 +22,14 @@ struct TabBarView: View {
     @Namespace var animation
     private let tabsView: [Tabs] = [.news, .friends, .groups]
     private let friendViewModel: FriendViewModel
+    private let groupViewModel: GroupViewModel
     
 //MARK: - Init
-    init(selected: Tabs, friendViewModel: FriendViewModel) {
+    init(selected: Tabs,
+         friendViewModel: FriendViewModel,
+         groupViewModel: GroupViewModel) {
         self.friendViewModel = friendViewModel
+        self.groupViewModel = groupViewModel
         self.selectedTab = selected
         UITabBar.appearance().isHidden = true
     }
@@ -50,7 +54,7 @@ struct TabBarView: View {
             FriendView(viewModel: friendViewModel)
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.friends)
-            GroupsView()
+            GroupsView(viewModel: groupViewModel)
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.groups)
         }
@@ -120,6 +124,8 @@ struct TabBarView: View {
 //MARK: - Previews
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarView(selected: .news, friendViewModel: FriendViewModel())
+        TabBarView(selected: .news,
+                   friendViewModel: FriendViewModel(),
+                   groupViewModel: GroupViewModel())
     }
 }

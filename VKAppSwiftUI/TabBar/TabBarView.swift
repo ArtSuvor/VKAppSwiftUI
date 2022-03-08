@@ -85,6 +85,7 @@ struct TabBarView: View {
                             .matchedGeometryEffect(id: tab, in: animation)
                             .offset(x: isSelectedToTab ? (reader.frame(in: .global).minX - reader.frame(in: .global).midX + 1) : 0,
                                     y: isSelectedToTab ? -45 : 0)
+                            .shadow(color: .white, radius: 5)
                     }
                     .onAppear {
                         if tab == tabsView.first {

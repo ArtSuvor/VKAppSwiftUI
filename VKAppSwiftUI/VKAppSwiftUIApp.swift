@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct VKAppSwiftUIApp: App {
+    private let di = DI()
+    
     var body: some Scene {
         WindowGroup {
-            TabBarView(selected: .news)
+            di.createTabBar()
         }
     }
 }

@@ -21,8 +21,11 @@ struct TabBarView: View {
     @State var xAxis: CGFloat = 0
     @Namespace var animation
     private let tabsView: [Tabs] = [.news, .friends, .groups]
+    private let friendViewModel: FriendViewModel
     
-    init(selected: Tabs) {
+//MARK: - Init
+    init(selected: Tabs, friendViewModel: FriendViewModel) {
+        self.friendViewModel = friendViewModel
         self.selectedTab = selected
         UITabBar.appearance().isHidden = true
     }
@@ -41,9 +44,10 @@ struct TabBarView: View {
 //MARK: - CreateTabView
     private func createTabView() -> some View {
         TabView(selection: $selectedTab) {
-            FriendView()
+            FriendView(viewModel: friendViewModel)
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.friends)
+
             GroupsView()
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.groups)
@@ -95,6 +99,7 @@ struct TabBarView: View {
                         .clipShape(CustomShape(xAxis: xAxis))
                         .cornerRadius(10))
         .padding(.horizontal)
+        .padding(.bottom, UIApplication.shared.windows.first?.safeAreaInsets.bottom)
     }
     
 //MARK: - GetColorForImageButton
@@ -113,6 +118,6 @@ struct TabBarView: View {
 //MARK: - Previews
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarView(selected: .news)
+        TabBarView(selected: .news, friendViewModel: FriendViewModel())
     }
 }

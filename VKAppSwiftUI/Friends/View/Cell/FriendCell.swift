@@ -16,7 +16,7 @@ struct FriensCell: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
-                .foregroundColor(.gray)
+                .foregroundColor(Color("friendsTabColor"))
             
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
@@ -26,6 +26,7 @@ struct FriensCell: View {
                     Text(isOnline ? "Online" : "Offline")
                         .font(.system(size: 10))
                         .foregroundColor(isOnline ? .green : .red)
+                    Spacer()
                 }
                 
                 Spacer()

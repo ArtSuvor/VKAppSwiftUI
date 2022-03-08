@@ -23,7 +23,6 @@ struct FriendView: View {
                 .listStyle(.inset)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.gray)
             .navigationTitle("Friends")
         }
     }

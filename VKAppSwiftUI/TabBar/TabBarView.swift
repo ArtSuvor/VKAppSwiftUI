@@ -72,7 +72,7 @@ struct TabBarView: View {
                             xAxis = reader.frame(in: .global).minX
                         }
                     } label: {
-                        Image(systemName: tab.rawValue)
+                        Image(systemName: tab.rawValue + (isSelectedToTab ? ".fill" : ""))
                             .resizable()
                             .renderingMode(.template)
                             .aspectRatio(contentMode: .fit)

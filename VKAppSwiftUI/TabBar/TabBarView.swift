@@ -44,10 +44,12 @@ struct TabBarView: View {
 //MARK: - CreateTabView
     private func createTabView() -> some View {
         TabView(selection: $selectedTab) {
+            NewsView()
+                .ignoresSafeArea(.all, edges: .all)
+                .tag(Tabs.news)
             FriendView(viewModel: friendViewModel)
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.friends)
-
             GroupsView()
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.groups)

@@ -9,10 +9,13 @@ import SwiftUI
 
 struct GroupsView: View {
     var body: some View {
-        ZStack(alignment: .bottom) {
-            Color.black
-                .ignoresSafeArea()
-            
+        NavigationView {
+            ZStack(alignment: .bottom) {
+                Color.white
+                    .ignoresSafeArea()
+                
+            }
+            .navigationTitle("Groups")
         }
     }
 }

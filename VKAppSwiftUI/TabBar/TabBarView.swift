@@ -51,7 +51,7 @@ struct TabBarView: View {
             NewsView()
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.news)
-            FriendView(viewModel: friendViewModel)
+            FriendsView(viewModel: friendViewModel)
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.friends)
             GroupsView(viewModel: groupViewModel)

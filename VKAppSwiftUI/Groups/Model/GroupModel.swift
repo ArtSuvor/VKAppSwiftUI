@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct GroupModel: Codable {
+struct GroupModel: Identifiable {
+    let id: String = UUID().uuidString
     let name: String
     let subscribers: Int
     let image: String

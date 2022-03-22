@@ -19,15 +19,15 @@ final class FriendViewModel {
         friends[index]
     }
     
-    func getCountFriends() -> Int {
-        friends.count
+    func getFriends() -> [FriendModel] {
+        friends
     }
     
 //MARK: - Private Methods
     private func createFriends() {
-        let friend = FriendModel(name: "afdgsdfg", isOnline: true, image: "plus")
-        let friendTwo = FriendModel(name: "dsfrd", isOnline: false, image: "plus")
-        let friendThree = FriendModel(name: "ggggggg", isOnline: true, image: "plus")
+        let friend = FriendModel(name: "afdgsdfg", isOnline: true, avatarImage: "plus", photos: ["pencil", "pencil.circle.fill", "trash", "trash.fill"])
+        let friendTwo = FriendModel(name: "dsfrd", isOnline: false, avatarImage: "plus", photos: [""])
+        let friendThree = FriendModel(name: "ggggggg", isOnline: true, avatarImage: "plus", photos: [""])
         
         friends.append(friend)
         friends.append(friendTwo)

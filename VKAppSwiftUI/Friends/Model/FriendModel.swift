@@ -7,8 +7,10 @@
 
 import Foundation
 
-struct FriendModel: Codable {
+struct FriendModel: Identifiable {
+    let id: String = UUID().uuidString
     let name: String
     let isOnline: Bool
-    let image: String
+    let avatarImage: String
+    let photos: [String]
 }

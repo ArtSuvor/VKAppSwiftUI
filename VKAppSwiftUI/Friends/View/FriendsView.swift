@@ -7,18 +7,20 @@
 
 import SwiftUI
 
-struct FriendView: View {
+struct FriendsView: View {
     let viewModel: FriendViewModel
     
     var body: some View {
         NavigationView {
             ZStack {
-                List {
-                    ForEach(0..<viewModel.getCountFriends(), id: \.description) { item in
-                        FriensCell(friend: viewModel.getFriend(index: item))
-                            .listRowInsets(EdgeInsets())
-                            .padding(5)
+                List(viewModel.getFriends()) { item in
+                    NavigationLink {
+                        LazyView(FriendDetailView(photos: item.photos))
+                    } label: {
+                        FriensCell(friend: item)
                     }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                 }
                 .listStyle(.inset)
             }
@@ -30,6 +32,6 @@ struct FriendView: View {
 
 struct FriendView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendView(viewModel: FriendViewModel())
+        FriendsView(viewModel: FriendViewModel())
     }
 }

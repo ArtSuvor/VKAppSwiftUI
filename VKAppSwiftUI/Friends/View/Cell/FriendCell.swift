@@ -26,24 +26,21 @@ struct FriensCell: View {
                     Text(isOnline ? "Online" : "Offline")
                         .font(.system(size: 10))
                         .foregroundColor(isOnline ? .green : .red)
-                    Spacer()
                 }
                 
                 Spacer()
                 
-                Image(systemName: friend.image)
+                Image(systemName: friend.avatarImage)
                     .resizable()
                     .background(
-                        RoundedRectangle(cornerRadius: 25)
+                        RoundedRectangle(cornerRadius: 20)
                             .foregroundColor(.white)
                             .shadow(color: .black, radius: 5)
                     )
-                    .frame(width: 50, height: 50)
+                    .frame(width: 40, height: 40)
             }
             .padding(10)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: 50)
         }
-        .listRowSeparator(.hidden)
-        .listRowBackground(Color.clear)
     }
 }

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let screen = UIScreen.main.bounds
+
 @main
 struct VKAppSwiftUIApp: App {
     private let di = DI()

@@ -19,8 +19,8 @@ final class GroupViewModel {
         groups[index]
     }
     
-    func getCountGroups() -> Int {
-        groups.count
+    func getGroups() -> [GroupModel] {
+        groups
     }
     
 //MARK: - Private Methods

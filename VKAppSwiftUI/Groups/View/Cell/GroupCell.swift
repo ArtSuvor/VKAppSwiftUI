@@ -19,11 +19,11 @@ struct GroupCell: View {
                 Image(systemName: group.image)
                     .resizable()
                     .background(
-                    RoundedRectangle(cornerRadius: 25)
+                    RoundedRectangle(cornerRadius: 20)
                         .foregroundColor(.white)
                         .shadow(color: .black, radius: 5)
                     )
-                    .frame(width: 50, height: 50)
+                    .frame(width: 40, height: 40)
                 
                 VStack(alignment: .leading, spacing: 5) {
                     Text(group.name)

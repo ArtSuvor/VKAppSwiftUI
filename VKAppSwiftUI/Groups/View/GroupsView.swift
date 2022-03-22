@@ -13,12 +13,10 @@ struct GroupsView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
-                List {
-                    ForEach(0..<viewModel.getCountGroups(), id: \.description) { item in
-                        GroupCell(group: viewModel.getGroup(index: item))
-                            .listRowInsets(EdgeInsets())
-                            .padding(5)
-                    }
+                List(viewModel.getGroups()) { item in
+                    GroupCell(group: item)
+                        .listRowInsets(EdgeInsets())
+                        .padding(5)
                 }
                 .listStyle(.inset)
             }

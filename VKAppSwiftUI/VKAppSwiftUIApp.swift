@@ -7,11 +7,15 @@
 
 import SwiftUI
 
+let screen = UIScreen.main.bounds
+
 @main
 struct VKAppSwiftUIApp: App {
+    private let di = DI()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            di.createTabBar()
         }
     }
 }

@@ -15,7 +15,8 @@ struct VKAppSwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-            di.createTabBar()
+            AuthorizationView()
+//            di.createTabBar()
         }
     }
 }

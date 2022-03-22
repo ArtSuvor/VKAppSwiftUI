@@ -170,6 +170,27 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		6E7481F727EA2AE8000D924E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6E7481F027E9FBC7000D924E /* Helpers */,
+				6EAF350027D6816D004D78EB /* TabBar */,
+				6E1AD45827D775D700D6BC30 /* News */,
+				6EB6CD9727D652E900583BF3 /* Groups */,
+				6EB6CD9627D652DF00583BF3 /* Friends */,
+				6E7481F527EA282C000D924E /* Auth */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6E7481F827EA2AFB000D924E /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				6E1AD45527D7730100D6BC30 /* DI */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		6EAF34F227D65E48004D78EB /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,14 +255,9 @@
 		6EE87AC327CD613F003B6B72 /* VKAppSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				6E7481F027E9FBC7000D924E /* Helpers */,
-				6E1AD45527D7730100D6BC30 /* DI */,
-				6EAF350027D6816D004D78EB /* TabBar */,
-				6E1AD45827D775D700D6BC30 /* News */,
-				6EB6CD9727D652E900583BF3 /* Groups */,
-				6EB6CD9627D652DF00583BF3 /* Friends */,
+				6E7481F827EA2AFB000D924E /* Service */,
 				6E7481F627EA283F000D924E /* Application */,
-				6E7481F527EA282C000D924E /* Auth */,
+				6E7481F727EA2AE8000D924E /* Views */,
 				6EE87AC827CD6141003B6B72 /* Assets.xcassets */,
 				6EE87ACA27CD6141003B6B72 /* Preview Content */,
 			);

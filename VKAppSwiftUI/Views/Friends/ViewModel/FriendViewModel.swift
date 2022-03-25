@@ -7,30 +7,27 @@
 
 import Foundation
 
-final class FriendViewModel {
-    private var friends: [FriendModel] = []
+final class FriendViewModel: ObservableObject {
+    @Published private(set) var friends: [FriendModel] = []
+    @Published var isErrorShow: Bool = false
+    private(set) var errorMessage: String?
+    
+    private var operation = UserOperation()
     
     init() {
-        createFriends()
-    }
-    
-//MARK: - Methods
-    func getFriend(index: Int) -> FriendModel {
-        friends[index]
-    }
-    
-    func getFriends() -> [FriendModel] {
-        friends
+        getFriends()
     }
     
 //MARK: - Private Methods
-    private func createFriends() {
-        let friend = FriendModel(name: "afdgsdfg", isOnline: true, avatarImage: "plus", photos: ["pencil", "pencil.circle.fill", "trash", "trash.fill"])
-        let friendTwo = FriendModel(name: "dsfrd", isOnline: false, avatarImage: "plus", photos: [""])
-        let friendThree = FriendModel(name: "ggggggg", isOnline: true, avatarImage: "plus", photos: [""])
-        
-        friends.append(friend)
-        friends.append(friendTwo)
-        friends.append(friendThree)
+    private func getFriends() {
+        operation.getFriends {[weak self] result in
+            switch result {
+                case let .success(friends):
+                    self?.friends = friends
+                case let .failure(error):
+                    self?.isErrorShow = true
+                    self?.errorMessage = error.localizedDescription
+            }
+        }
     }
 }

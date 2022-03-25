@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct FriendsView: View {
-    let viewModel: FriendViewModel
+    @ObservedObject var viewModel: FriendViewModel
     
     var body: some View {
         NavigationView {
             ZStack {
-                List(viewModel.getFriends()) { item in
+                List(viewModel.friends) { item in
                     NavigationLink {
-                        LazyView(FriendDetailView(photos: item.photos))
+                        LazyView(FriendDetailView(viewModel: FriendImageViewModel(),
+                                                  friend: item))
                     } label: {
                         FriensCell(friend: item)
                     }
@@ -27,6 +28,12 @@ struct FriendsView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle("Friends")
         }
+        .alert("Error", isPresented: $viewModel.isErrorShow) {
+            EmptyView()
+        } message: {
+            Text(viewModel.errorMessage ?? "")
+        }
+
     }
 }
 

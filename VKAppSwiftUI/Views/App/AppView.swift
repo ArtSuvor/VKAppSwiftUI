@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppView: View {
     private let di = DI()
-    @AppStorage("vkToken") var token: String?
+    @AppStorage("userToken") var token: String?
     
     var body: some View {
         HStack {

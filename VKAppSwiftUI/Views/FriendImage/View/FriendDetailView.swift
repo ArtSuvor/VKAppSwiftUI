@@ -20,7 +20,7 @@ struct FriendDetailView: View {
                     NavigationLink {
                         EmptyView()
                     } label: {
-                        createImageView(image: item.image.last?.url)
+                        createImageView(image: item.image)
                             .aspectRatio(contentMode: .fit)
                             .foregroundColor(.black)
                             .cornerRadius(10)

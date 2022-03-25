@@ -6,24 +6,43 @@
 //
 
 import Foundation
+import RealmSwift
 
 final class FriendImageViewModel: ObservableObject {
     
-    @Published private(set) var images: [FriendImageModel] = []
+// MARK: Properties
+    @Published private(set) var images: [RealmFriendImage] = []
     @Published var isErrorShow: Bool = false
-    
     private(set) var errorMessaga: String?
-    private var operation = UserOperation()
     
+    private let database: DatabaseService
+    private let operation: UserOperation
+    
+// MARK: Init
+    init(database: DatabaseService, operation: UserOperation) {
+        self.database = database
+        self.operation = operation
+    }
+    
+// MARK: Methods
     func getImages(userId: Int) {
-        operation.getUserImages(userId: userId) {[weak self] result in
-            switch result {
-                case let .success(images):
-                    self?.images = images
-                case let .failure(error):
-                    self?.isErrorShow = true
-                    self?.errorMessaga = error.localizedDescription
+        images = checkCacheFriendImage(userId: userId)
+        operation.getUserImages(userId: userId) {[weak self] error in
+            if let error = error {
+                self?.isErrorShow = true
+                self?.errorMessaga = error.localizedDescription
             }
+        }
+    }
+    
+// MARK: Private methods
+    private func checkCacheFriendImage(userId: Int) -> [RealmFriendImage] {
+        do {
+            return Array( try database.get(RealmFriendImage.self).filter("ownerId == %@", userId))
+        } catch {
+            self.errorMessaga = error.localizedDescription
+            self.isErrorShow = true
+            return []
         }
     }
 }

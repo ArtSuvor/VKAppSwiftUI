@@ -10,19 +10,29 @@ import Foundation
 final class UserOperation {
     private let operationQueue = OperationQueue()
     private let mainQueue = OperationQueue.main
+    private let database: DatabaseService
+    
+    init(database: DatabaseService) {
+        self.database = database
+    }
     
 // MARK: GetFriends
-    func getFriends(handler: @escaping (Result<[FriendModel], Error>) -> Void) {
+    func getFriends(handler: @escaping (Error?) -> Void) {
         let getUser = RequestUser()
         let parseUser = ParseUser {[weak self] result in
             switch result {
                 case let .success(data):
                     self?.mainQueue.addOperation {
-                        handler(.success(data))
+                        do {
+                            let realmFriend = data.map { RealmFriend($0)}
+                            _ = try self?.database.save(realmFriend)
+                        } catch let error {
+                            handler(error)
+                        }
                     }
                 case let .failure(error):
                     self?.mainQueue.addOperation {
-                        handler(.failure(error))
+                        handler(error)
                     }
             }
         }
@@ -32,17 +42,22 @@ final class UserOperation {
     }
     
 // MARK: GetUserImage
-    func getUserImages(userId: Int, handler: @escaping (Result<[FriendImageModel], Error>) -> Void) {
+    func getUserImages(userId: Int, handler: @escaping (Error?) -> Void) {
         let getImage = RequestUserImage(userId: userId)
         let parseImage = ParseUserImage { [weak self] result in
             switch result {
                 case let .success(images):
                     self?.mainQueue.addOperation {
-                        handler(.success(images))
+                        do {
+                            let realmImage = images.compactMap { RealmFriendImage($0)}
+                            _ = try self?.database.save(realmImage)
+                        } catch {
+                            handler(error)
+                        }
                     }
                 case let .failure(error):
                     self?.mainQueue.addOperation {
-                        handler(.failure(error))
+                        handler(error)
                     }
             }
         }

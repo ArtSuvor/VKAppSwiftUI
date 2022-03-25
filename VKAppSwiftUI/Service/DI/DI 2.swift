@@ -14,10 +14,6 @@ final class DI {
                    groupViewModel: createGroupsViewModel())
     }
     
-    func createAuthView() -> VKLoginWebView {
-        VKLoginWebView()
-    }
-    
 //MARK: - Private
     private func createFriendsViewModel() -> FriendViewModel {
         FriendViewModel()

@@ -9,7 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct FriendDetailView: View {
-    private let layout = GridItem(.adaptive(minimum: screen.width / 2.5))
+    private let layout = GridItem(.adaptive(minimum: screen.width / 2.4))
     @ObservedObject var viewModel: FriendImageViewModel
     var friend: FriendModel
     

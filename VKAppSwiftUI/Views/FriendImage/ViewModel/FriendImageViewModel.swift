@@ -26,13 +26,14 @@ final class FriendImageViewModel: ObservableObject {
     
 // MARK: Methods
     func getImages(userId: Int) {
-        images = checkCacheFriendImage(userId: userId)
         operation.getUserImages(userId: userId) {[weak self] error in
+            guard let self = self else { return }
             if let error = error {
-                self?.isErrorShow = true
-                self?.errorMessaga = error.localizedDescription
+                self.isErrorShow = true
+                self.errorMessaga = error.localizedDescription
             }
         }
+        images = checkCacheFriendImage(userId: userId)
     }
     
 // MARK: Private methods

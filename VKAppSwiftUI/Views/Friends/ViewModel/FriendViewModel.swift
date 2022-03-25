@@ -26,13 +26,14 @@ final class FriendViewModel: ObservableObject {
     
 //MARK: - Methods
     func getFriends() {
-        friends = checkCacheFriends()
         operation.getFriends {[weak self] error in
+            guard let self = self else { return }
             if let error = error {
-                self?.errorMessage = error.localizedDescription
-                self?.isErrorShow = true
+                self.errorMessage = error.localizedDescription
+                self.isErrorShow = true
             }
         }
+        friends = checkCacheFriends()
     }
     
 // MARK: Private methods

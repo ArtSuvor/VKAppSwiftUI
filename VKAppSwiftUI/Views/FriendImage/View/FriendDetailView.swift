@@ -18,7 +18,8 @@ struct FriendDetailView: View {
             LazyVGrid(columns: [layout]) {
                 ForEach(viewModel.images) { item in
                     NavigationLink {
-                        EmptyView()
+                        LazyView(createImageView(image: item.image))
+                            .scaledToFit()
                     } label: {
                         createImageView(image: item.image)
                             .aspectRatio(contentMode: .fit)

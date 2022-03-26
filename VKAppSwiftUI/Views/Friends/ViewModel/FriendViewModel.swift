@@ -26,25 +26,26 @@ final class FriendViewModel: ObservableObject {
     
 //MARK: - Methods
     func getFriends() {
-        operation.getFriends {[weak self] error in
+        friends = checkCacheFriends()
+        operation.getFriends {[weak self] result in
             guard let self = self else { return }
-            if let error = error {
-                self.errorMessage = error.localizedDescription
-                self.isErrorShow = true
+            switch result {
+                case let .success(friends):
+                    self.friends = self.createFriendsModel(model: friends)
+                case let .failure(error):
+                    self.showError(error: error)
             }
         }
-        friends = checkCacheFriends()
     }
     
 // MARK: Private methods
     private func checkCacheFriends() -> [FriendModel] {
         var friends = [FriendModel]()
         do {
-            let realmFriends = try database.get(RealmFriend.self)
+            let realmFriends = try database.get(RealmFriend.self).sorted(byKeyPath: "firstName")
             friends = createFriendsModel(model: realmFriends)
         } catch {
-            self.isErrorShow = true
-            self.errorMessage = error.localizedDescription
+            self.showError(error: error)
         }
         return friends
     }
@@ -57,5 +58,10 @@ final class FriendViewModel: ObservableObject {
                         online: item.online,
                         image: item.image)
         }
+    }
+    
+    private func showError(error: Error) {
+        errorMessage = error.localizedDescription
+        isErrorShow = true
     }
 }

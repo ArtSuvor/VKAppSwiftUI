@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 final class UserOperation {
     private let operationQueue = OperationQueue()
@@ -17,22 +18,26 @@ final class UserOperation {
     }
     
 // MARK: GetFriends
-    func getFriends(handler: @escaping (Error?) -> Void) {
+    func getFriends(handler: @escaping (Result<Results<RealmFriend>, Error>) -> Void) {
         let getUser = RequestUser()
         let parseUser = ParseUser {[weak self] result in
+            guard let self = self else { return }
             switch result {
                 case let .success(data):
-                    self?.mainQueue.addOperation {
+                    self.mainQueue.addOperation {
                         do {
                             let realmFriend = data.map { RealmFriend($0)}
-                            _ = try self?.database.save(realmFriend)
+                            _ = try self.database.save(realmFriend)
+                            
+                            let friends = try self.database.get(RealmFriend.self).sorted(byKeyPath: "firstName")
+                            handler(.success(friends))
                         } catch let error {
-                            handler(error)
+                            handler(.failure(error))
                         }
                     }
                 case let .failure(error):
-                    self?.mainQueue.addOperation {
-                        handler(error)
+                    self.mainQueue.addOperation {
+                        handler(.failure(error))
                     }
             }
         }
@@ -42,22 +47,26 @@ final class UserOperation {
     }
     
 // MARK: GetUserImage
-    func getUserImages(userId: Int, handler: @escaping (Error?) -> Void) {
+    func getUserImages(userId: Int, handler: @escaping (Result<[RealmFriendImage], Error>) -> Void) {
         let getImage = RequestUserImage(userId: userId)
         let parseImage = ParseUserImage { [weak self] result in
+            guard let self = self else { return }
             switch result {
                 case let .success(images):
-                    self?.mainQueue.addOperation {
+                    self.mainQueue.addOperation {
                         do {
                             let realmImage = images.compactMap { RealmFriendImage($0)}
-                            _ = try self?.database.save(realmImage)
+                            _ = try self.database.save(realmImage)
+                            
+                            let images = try self.database.get(RealmFriendImage.self).filter("ownerId == %@", userId)
+                            handler(.success(Array(images)))
                         } catch {
-                            handler(error)
+                            handler(.failure(error))
                         }
                     }
                 case let .failure(error):
-                    self?.mainQueue.addOperation {
-                        handler(error)
+                    self.mainQueue.addOperation {
+                        handler(.failure(error))
                     }
             }
         }

@@ -26,14 +26,16 @@ final class FriendImageViewModel: ObservableObject {
     
 // MARK: Methods
     func getImages(userId: Int) {
-        operation.getUserImages(userId: userId) {[weak self] error in
+        images = checkCacheFriendImage(userId: userId)
+        operation.getUserImages(userId: userId) {[weak self] result in
             guard let self = self else { return }
-            if let error = error {
-                self.isErrorShow = true
-                self.errorMessaga = error.localizedDescription
+            switch result {
+                case let .success(images):
+                    self.images = images
+                case let .failure(error):
+                    self.showError(error: error)
             }
         }
-        images = checkCacheFriendImage(userId: userId)
     }
     
 // MARK: Private methods
@@ -41,9 +43,13 @@ final class FriendImageViewModel: ObservableObject {
         do {
             return Array( try database.get(RealmFriendImage.self).filter("ownerId == %@", userId))
         } catch {
-            self.errorMessaga = error.localizedDescription
-            self.isErrorShow = true
+            self.showError(error: error)
             return []
         }
+    }
+    
+    private func showError(error: Error) {
+        errorMessaga = error.localizedDescription
+        isErrorShow = true
     }
 }

@@ -46,8 +46,9 @@ final class GroupViewModel: ObservableObject {
             }
         }
     }
-    
-    func searchGroups() {
+
+//MARK: - Private Methods
+    private func searchGroups() {
         operation.searchGroups(text: searchText) { result in
             switch result {
                 case let .success(groups):
@@ -58,7 +59,6 @@ final class GroupViewModel: ObservableObject {
         }
     }
     
-//MARK: - Private Methods
     private func checkCacheGroups() {
         do {
             let realmGroups = try database.get(RealmGroup.self).sorted(byKeyPath: "name")

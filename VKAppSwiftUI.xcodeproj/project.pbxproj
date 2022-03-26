@@ -18,6 +18,8 @@
 		6E1BD49F27EF375900427EA5 /* RequestGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BD49E27EF375900427EA5 /* RequestGroup.swift */; };
 		6E1BD4A127EF3A2B00427EA5 /* ParseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BD4A027EF3A2B00427EA5 /* ParseGroup.swift */; };
 		6E1BD4A327EF3C9D00427EA5 /* GroupOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BD4A227EF3C9D00427EA5 /* GroupOperation.swift */; };
+		6E1BD4A527EF547900427EA5 /* RequestSearchGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BD4A427EF547900427EA5 /* RequestSearchGroups.swift */; };
+		6E1BD4A927EF5A0400427EA5 /* ParseSearchGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1BD4A827EF5A0400427EA5 /* ParseSearchGroup.swift */; };
 		6E55671D27EDD97F004CBE13 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E55671C27EDD97F004CBE13 /* AppView.swift */; };
 		6E55672227EDDCE6004CBE13 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E55672127EDDCE5004CBE13 /* UserRouter.swift */; };
 		6E55672627EDE0ED004CBE13 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6E55672527EDE0ED004CBE13 /* Alamofire */; };
@@ -63,6 +65,8 @@
 		6E1BD49E27EF375900427EA5 /* RequestGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestGroup.swift; sourceTree = "<group>"; };
 		6E1BD4A027EF3A2B00427EA5 /* ParseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseGroup.swift; sourceTree = "<group>"; };
 		6E1BD4A227EF3C9D00427EA5 /* GroupOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupOperation.swift; sourceTree = "<group>"; };
+		6E1BD4A427EF547900427EA5 /* RequestSearchGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSearchGroups.swift; sourceTree = "<group>"; };
+		6E1BD4A827EF5A0400427EA5 /* ParseSearchGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseSearchGroup.swift; sourceTree = "<group>"; };
 		6E55671C27EDD97F004CBE13 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		6E55672127EDDCE5004CBE13 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		6E55672727EDE2F6004CBE13 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				6E1BD49E27EF375900427EA5 /* RequestGroup.swift */,
+				6E1BD4A427EF547900427EA5 /* RequestSearchGroups.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -220,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				6E1BD4A027EF3A2B00427EA5 /* ParseGroup.swift */,
+				6E1BD4A827EF5A0400427EA5 /* ParseSearchGroup.swift */,
 			);
 			path = Parse;
 			sourceTree = "<group>";
@@ -574,11 +580,13 @@
 				6E7481F227E9FBD6000D924E /* LazyView.swift in Sources */,
 				6E1BD49F27EF375900427EA5 /* RequestGroup.swift in Sources */,
 				6E1BD49827EF354700427EA5 /* RealmGroup.swift in Sources */,
+				6E1BD4A927EF5A0400427EA5 /* ParseSearchGroup.swift in Sources */,
 				6EE87AC727CD613F003B6B72 /* AuthorizationView.swift in Sources */,
 				6E1AD45727D7731200D6BC30 /* DI.swift in Sources */,
 				6E1BD4A327EF3C9D00427EA5 /* GroupOperation.swift in Sources */,
 				6E55673327EDE911004CBE13 /* ParseUser.swift in Sources */,
 				6EAF350227D6818E004D78EB /* TabBarView.swift in Sources */,
+				6E1BD4A527EF547900427EA5 /* RequestSearchGroups.swift in Sources */,
 				6E55674027EE077B004CBE13 /* ParseUserImage.swift in Sources */,
 				6E1AD45127D75CD600D6BC30 /* FriendModel.swift in Sources */,
 				6E55675327EE3C5C004CBE13 /* RealmFriendImage.swift in Sources */,

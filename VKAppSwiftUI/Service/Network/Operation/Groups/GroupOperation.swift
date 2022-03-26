@@ -45,4 +45,25 @@ final class GroupOperation {
         parseGroups.addDependency(requestGroups)
         operationQueue.addOperations(operations, waitUntilFinished: false)
     }
+    
+// MARK: SearchGroup
+    func searchGroups(text: String, handler: @escaping (Result<[GroupModel], Error>) -> Void) {
+        let request = RequestSearchGroups(searchText: text)
+        let parse = ParseSearchGroup { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+                case let .success(groups):
+                    self.mainQueue.addOperation {
+                        handler(.success(groups))
+                    }
+                case let .failure(error):
+                    self.mainQueue.addOperation {
+                        handler(.failure(error))
+                    }
+            }
+        }
+        let operations = [request, parse]
+        parse.addDependency(request)
+        operationQueue.addOperations(operations, waitUntilFinished: false)
+    }
 }

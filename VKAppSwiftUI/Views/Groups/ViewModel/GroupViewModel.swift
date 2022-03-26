@@ -15,7 +15,11 @@ final class GroupViewModel: ObservableObject {
     @Published var isErrorShow: Bool = false
     @Published var searchText: String = "" {
         didSet {
-            searchGroups()
+            if searchText == "" {
+                getGroups()
+            } else {
+                searchGroups()
+            }
         }
     }
     private(set) var errorMessage: String?
@@ -44,7 +48,14 @@ final class GroupViewModel: ObservableObject {
     }
     
     func searchGroups() {
-        print(searchText)
+        operation.searchGroups(text: searchText) { result in
+            switch result {
+                case let .success(groups):
+                    self.groups = groups
+                case let .failure(error):
+                    self.showError(error: error)
+            }
+        }
     }
     
 //MARK: - Private Methods

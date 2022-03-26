@@ -26,7 +26,7 @@ final class FriendViewModel: ObservableObject {
     
 //MARK: - Methods
     func getFriends() {
-        friends = checkCacheFriends()
+        checkCacheFriends()
         operation.getFriends {[weak self] result in
             guard let self = self else { return }
             switch result {
@@ -39,15 +39,13 @@ final class FriendViewModel: ObservableObject {
     }
     
 // MARK: Private methods
-    private func checkCacheFriends() -> [FriendModel] {
-        var friends = [FriendModel]()
+    private func checkCacheFriends() {
         do {
             let realmFriends = try database.get(RealmFriend.self).sorted(byKeyPath: "firstName")
             friends = createFriendsModel(model: realmFriends)
         } catch {
             self.showError(error: error)
         }
-        return friends
     }
     
     private func createFriendsModel(model: Results<RealmFriend>) -> [FriendModel] {

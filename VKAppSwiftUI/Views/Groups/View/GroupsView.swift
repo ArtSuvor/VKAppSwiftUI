@@ -8,26 +8,24 @@
 import SwiftUI
 
 struct GroupsView: View {
-    let viewModel: GroupViewModel
+    @ObservedObject var viewModel: GroupViewModel
     
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottom) {
-                List(viewModel.getGroups()) { item in
+                List(viewModel.groups) { item in
                     GroupCell(group: item)
                         .listRowInsets(EdgeInsets())
-                        .padding(5)
+                        .padding(3)
                 }
-                .listStyle(.inset)
+                .listStyle(.plain)
             }
+            .searchable(text: $viewModel.searchText)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle("Groups")
+            .onAppear {
+                viewModel.getGroups()
+            }
         }
-    }
-}
-
-struct GroupsView_Previews: PreviewProvider {
-    static var previews: some View {
-        GroupsView(viewModel: GroupViewModel())
     }
 }

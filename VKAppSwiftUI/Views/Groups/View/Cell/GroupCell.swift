@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct GroupCell: View {
     let group: GroupModel
@@ -16,10 +17,10 @@ struct GroupCell: View {
                 .foregroundColor(Color("groupsTabColor"))
             
             HStack {
-                Image(systemName: group.image)
-                    .resizable()
+                createImageView(image: group.image)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                     .background(
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(.white)
                         .shadow(color: .black, radius: 5)
                     )
@@ -29,16 +30,30 @@ struct GroupCell: View {
                     Text(group.name)
                         .font(.system(size: 17))
                         .shadow(color: .white, radius: 5)
-                    Text("\(group.subscribers)")
+                    Text("\(group.subscribers ?? 0)")
                         .font(.system(size: 10))
                     Spacer()
                 }
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(10)
+            .padding(5)
         }
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
+    }
+    
+    private func createImageView(image: String?) -> some View {
+        ZStack {
+            if let image = image,
+               let url = URL(string: image) {
+                KFImage(url)
+                    .resizable()
+                    .cancelOnDisappear(true)
+            } else {
+                Image(systemName: "person")
+                    .resizable()
+            }
+        }
     }
 }

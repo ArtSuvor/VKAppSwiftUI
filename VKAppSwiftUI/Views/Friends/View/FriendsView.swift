@@ -27,6 +27,8 @@ struct FriendsView: View {
                     } label: {
                         FriensCell(friend: item)
                     }
+                    .listRowInsets(EdgeInsets())
+                    .padding(3)
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                 }

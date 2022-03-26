@@ -23,17 +23,14 @@ struct TabBarView: View {
     private let tabsView: [Tabs] = [.news, .friends, .groups]
     private let friendViewModel: FriendViewModel
     private let groupViewModel: GroupViewModel
-    private let friendImageViewModel: FriendImageViewModel
     
 //MARK: - Init
     init(selected: Tabs,
          friendViewModel: FriendViewModel,
-         groupViewModel: GroupViewModel,
-         friendImageViewModel: FriendImageViewModel) {
+         groupViewModel: GroupViewModel) {
         self.friendViewModel = friendViewModel
         self.groupViewModel = groupViewModel
         self.selectedTab = selected
-        self.friendImageViewModel = friendImageViewModel
         UITabBar.appearance().isHidden = true
     }
     
@@ -54,7 +51,7 @@ struct TabBarView: View {
             NewsView()
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.news)
-            FriendsView(viewModel: friendViewModel, friendImageViewModel: friendImageViewModel)
+            FriendsView(viewModel: friendViewModel)
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.friends)
             GroupsView(viewModel: groupViewModel)
@@ -122,5 +119,14 @@ struct TabBarView: View {
             case .groups:
                 return Color("groupsTabColor")
         }
+    }
+}
+
+//MARK: - Previews
+struct TabBarView_Previews: PreviewProvider {
+    static var previews: some View {
+        TabBarView(selected: .news,
+                   friendViewModel: FriendViewModel(),
+                   groupViewModel: GroupViewModel())
     }
 }

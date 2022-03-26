@@ -6,31 +6,62 @@
 //
 
 import Foundation
+import RealmSwift
 
-final class FriendViewModel {
-    private var friends: [FriendModel] = []
+final class FriendViewModel: ObservableObject {
     
-    init() {
-        createFriends()
+// MARK: Properties
+    @Published private(set) var friends: [FriendModel] = []
+    @Published var isErrorShow: Bool = false
+    private(set) var errorMessage: String?
+    
+    private let database: DatabaseService
+    private let operation: UserOperation
+    
+// MARK: Init
+    init(database: DatabaseService, operation: UserOperation) {
+        self.database = database
+        self.operation = operation
     }
     
 //MARK: - Methods
-    func getFriend(index: Int) -> FriendModel {
-        friends[index]
+    func getFriends() {
+        friends = checkCacheFriends()
+        operation.getFriends {[weak self] result in
+            guard let self = self else { return }
+            switch result {
+                case let .success(friends):
+                    self.friends = self.createFriendsModel(model: friends)
+                case let .failure(error):
+                    self.showError(error: error)
+            }
+        }
     }
     
-    func getFriends() -> [FriendModel] {
-        friends
+// MARK: Private methods
+    private func checkCacheFriends() -> [FriendModel] {
+        var friends = [FriendModel]()
+        do {
+            let realmFriends = try database.get(RealmFriend.self).sorted(byKeyPath: "firstName")
+            friends = createFriendsModel(model: realmFriends)
+        } catch {
+            self.showError(error: error)
+        }
+        return friends
     }
     
-//MARK: - Private Methods
-    private func createFriends() {
-        let friend = FriendModel(name: "afdgsdfg", isOnline: true, avatarImage: "plus", photos: ["pencil", "pencil.circle.fill", "trash", "trash.fill"])
-        let friendTwo = FriendModel(name: "dsfrd", isOnline: false, avatarImage: "plus", photos: [""])
-        let friendThree = FriendModel(name: "ggggggg", isOnline: true, avatarImage: "plus", photos: [""])
-        
-        friends.append(friend)
-        friends.append(friendTwo)
-        friends.append(friendThree)
+    private func createFriendsModel(model: Results<RealmFriend>) -> [FriendModel] {
+        model.map { item in
+            FriendModel(id: item.id,
+                        firstName: item.firstName,
+                        lastName: item.lastName,
+                        online: item.online,
+                        image: item.image)
+        }
+    }
+    
+    private func showError(error: Error) {
+        errorMessage = error.localizedDescription
+        isErrorShow = true
     }
 }

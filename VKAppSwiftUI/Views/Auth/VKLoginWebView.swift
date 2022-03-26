@@ -71,9 +71,7 @@ class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {
             return
         }
         
-        UserDefaults.standard.set(token, forKey: "vkToken")
-        NotificationCenter.default.post(name: NSNotification.Name("vkTokenSaved"), object: self)
-        
+        UserDefaultManager.shared.userToken = token
         
         decisionHandler(.cancel)
     }

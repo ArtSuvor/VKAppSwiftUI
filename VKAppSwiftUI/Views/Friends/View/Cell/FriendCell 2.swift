@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Kingfisher
 
 struct FriensCell: View {
     private var isOnline: Bool {
@@ -21,7 +20,7 @@ struct FriensCell: View {
             
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(friend.firstName + " " + friend.lastName)
+                    Text(friend.name)
                         .font(.system(size: 17))
                         .shadow(color: .white, radius: 5)
                     Text(isOnline ? "Online" : "Offline")
@@ -31,8 +30,8 @@ struct FriensCell: View {
                 
                 Spacer()
                 
-                createImageView(image: friend.image)
-                    .clipShape(Circle())
+                Image(systemName: friend.avatarImage)
+                    .resizable()
                     .background(
                         RoundedRectangle(cornerRadius: 20)
                             .foregroundColor(.white)
@@ -42,20 +41,6 @@ struct FriensCell: View {
             }
             .padding(10)
             .frame(maxWidth: .infinity, maxHeight: 50)
-        }
-    }
-    
-    private func createImageView(image: String?) -> some View {
-        ZStack {
-            if let image = image,
-               let url = URL(string: image) {
-                KFImage(url)
-                    .resizable()
-                    .cancelOnDisappear(true)
-            } else {
-                Image(systemName: "person")
-                    .resizable()
-            }
         }
     }
 }

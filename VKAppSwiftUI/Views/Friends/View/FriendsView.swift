@@ -20,13 +20,17 @@ struct FriendsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                List(viewModel.friends) { item in
+                List(viewModel.searchFriends.isEmpty
+                     ? viewModel.friends
+                     : viewModel.searchFriends) { item in
                     NavigationLink {
                         LazyView(FriendDetailView(viewModel: friendImageViewModel,
                                                   friend: item))
                     } label: {
                         FriensCell(friend: item)
                     }
+                    .listRowInsets(EdgeInsets())
+                    .padding(3)
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                 }
@@ -34,6 +38,7 @@ struct FriendsView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle("Friends")
+            .searchable(text: $viewModel.searchText)
         }
         .onAppear {
             viewModel.getFriends()

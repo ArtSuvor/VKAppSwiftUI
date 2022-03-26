@@ -20,7 +20,7 @@ final class DatabaseServiceImpl: DatabaseService {
      
     //сохраняем в бд массив
     func save<T: Object> (_ items: [T]) throws -> Realm {
-        let realm = try Realm(configuration: .defaultConfiguration)
+        let realm = try Realm(configuration: .deleteIfMigration)
         try realm.write {
             realm.add(items, update: .all)
         }
@@ -29,7 +29,7 @@ final class DatabaseServiceImpl: DatabaseService {
     
     //сохраняем один объект
     func saveObject<T: Object> (_ item: T) throws -> Realm {
-        let realm = try Realm()
+        let realm = try Realm(configuration: .deleteIfMigration)
         try realm.write {
             realm.add(item, update: .all)
         }
@@ -38,19 +38,19 @@ final class DatabaseServiceImpl: DatabaseService {
     
     //извлекаем из бд по ключу
     func get<T: Object, KeyType>(_ type: T.Type, primaryKey: KeyType) throws -> T? {
-        let realm = try Realm()
+        let realm = try Realm(configuration: .deleteIfMigration)
         return realm.object(ofType: type, forPrimaryKey: primaryKey)
     }
     
     //извлекаем из бд
     func get<T: Object> (_ type: T.Type) throws -> Results<T> {
-        let realm = try Realm()
+        let realm = try Realm(configuration: .deleteIfMigration)
         return realm.objects(type)
     }
     
     //удаляем из бд один объект
     func delete<T: Object> (_ items: T) throws {
-        let realm = try Realm()
+        let realm = try Realm(configuration: .deleteIfMigration)
         try realm.write {
             realm.delete(items)
         }
@@ -58,9 +58,13 @@ final class DatabaseServiceImpl: DatabaseService {
     
     //удаляем массив объектов
     func deleteArray<T: Object> (_ items: [T]) throws {
-        let realm = try Realm()
+        let realm = try Realm(configuration: .deleteIfMigration)
         try realm.write {
             realm.delete(items)
         }
     }
+}
+
+extension Realm.Configuration {
+    static let deleteIfMigration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
 }

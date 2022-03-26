@@ -29,7 +29,7 @@ final class DI {
     }
     
     private func createGroupsViewModel() -> GroupViewModel {
-        GroupViewModel()
+        GroupViewModel(database: createDatabase(), operation: createGroupOperation())
     }
     
     private func createDatabase() -> DatabaseService {
@@ -38,5 +38,9 @@ final class DI {
     
     private func createUserOperation() -> UserOperation {
         UserOperation(database: createDatabase())
+    }
+    
+    private func createGroupOperation() -> GroupOperation {
+        GroupOperation(database: createDatabase())
     }
 }

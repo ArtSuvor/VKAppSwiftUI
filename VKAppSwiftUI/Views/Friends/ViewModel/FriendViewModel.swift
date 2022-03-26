@@ -12,7 +12,13 @@ final class FriendViewModel: ObservableObject {
     
 // MARK: Properties
     @Published private(set) var friends: [FriendModel] = []
+    @Published private(set) var searchFriends: [FriendModel] = []
     @Published var isErrorShow: Bool = false
+    @Published var searchText: String = "" {
+        didSet {
+            searchFriends(text: searchText)
+        }
+    }
     private(set) var errorMessage: String?
     
     private let database: DatabaseService
@@ -26,7 +32,7 @@ final class FriendViewModel: ObservableObject {
     
 //MARK: - Methods
     func getFriends() {
-        friends = checkCacheFriends()
+        checkCacheFriends()
         operation.getFriends {[weak self] result in
             guard let self = self else { return }
             switch result {
@@ -39,15 +45,18 @@ final class FriendViewModel: ObservableObject {
     }
     
 // MARK: Private methods
-    private func checkCacheFriends() -> [FriendModel] {
-        var friends = [FriendModel]()
+    private func searchFriends(text: String) {
+        searchFriends.removeAll()
+        searchFriends = friends.filter { $0.firstName.lowercased().contains(text.lowercased()) || $0.lastName.lowercased().contains(text.lowercased()) }
+    }
+
+    private func checkCacheFriends() {
         do {
             let realmFriends = try database.get(RealmFriend.self).sorted(byKeyPath: "firstName")
             friends = createFriendsModel(model: realmFriends)
         } catch {
             self.showError(error: error)
         }
-        return friends
     }
     
     private func createFriendsModel(model: Results<RealmFriend>) -> [FriendModel] {

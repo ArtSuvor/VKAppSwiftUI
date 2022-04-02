@@ -14,6 +14,8 @@ struct FriensCell: View {
     }
     let friend: FriendModel
     
+    @State private var isTappedImage: Bool = false
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
@@ -39,6 +41,12 @@ struct FriensCell: View {
                             .shadow(color: .black, radius: 5)
                     )
                     .frame(width: 40, height: 40)
+                    .scaleEffect(isTappedImage ? 1 : 1.5)
+                    .scaleEffect(isTappedImage ? 1 : 0.7)
+                    .animation(.spring(), value: isTappedImage)
+                    .onTapGesture {
+                        self.isTappedImage.toggle()
+                    }
             }
             .padding(10)
             .frame(maxWidth: .infinity, maxHeight: 50)

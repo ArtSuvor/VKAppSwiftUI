@@ -2,17 +2,14 @@
 //  NewsView.swift
 //  VKAppSwiftUI
 //
-//  Created by Art on 08.03.2022.
+//  Created by Art on 03.04.2022.
 //
 
 import SwiftUI
 
 struct NewsView: View {
     var body: some View {
-        NavigationView {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-                .navigationTitle("News")
-        }
+        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
     }
 }
 

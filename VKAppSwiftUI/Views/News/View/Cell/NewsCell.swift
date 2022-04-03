@@ -9,6 +9,9 @@ import SwiftUI
 import Kingfisher
 
 struct NewsCell: View {
+    private let layout = GridItem(.adaptive(minimum: screen.width / 2.4))
+    var news: NewsModel
+    
     var body: some View {
         VStack {
             createHeader()
@@ -24,7 +27,7 @@ struct NewsCell: View {
     private func createFooter() -> some View {
         HStack {
             HStack {
-                Text("0")
+                Text("\(news.likeCount?.count ?? 0)")
                 Image(systemName: "plus")
             }
             .padding(5)
@@ -33,7 +36,7 @@ struct NewsCell: View {
                 .foregroundColor(.gray))
             
             HStack {
-                Text("0")
+                Text("\(news.commentCount?.count ?? 0)")
                 Image(systemName: "plus")
             }
             .padding(5)
@@ -42,7 +45,7 @@ struct NewsCell: View {
                 .foregroundColor(.gray))
             
             HStack {
-                Text("0")
+                Text("\(news.repostCount?.count ?? 0)")
                 Image(systemName: "plus")
             }
             .padding(5)
@@ -54,7 +57,7 @@ struct NewsCell: View {
             
             HStack {
                 Image(systemName: "plus")
-                Text("0")
+                Text("\(news.viewsCount?.count ?? 0)")
             }
             .padding(5)
             .padding(.horizontal, 10)
@@ -62,6 +65,7 @@ struct NewsCell: View {
                 .foregroundColor(.gray))
             .foregroundColor(.white)
         }
+        .padding(.bottom, 10)
     }
     
 // MARK: BodyView
@@ -71,12 +75,23 @@ struct NewsCell: View {
                 .foregroundColor(Color("backColorNews"))
             
             VStack {
-                Text("adgsjfasjdfhasjkhdfjahskdhfjashdkfhasjdfhjasdkfahsjdfhaskdhfjashdfjkhasjdfhajkshdfhsjkdhfajkshfjahskdfhajshdfkasjhdflajsfhlasjdfhajsdhfjkasdfjshd")
+                Text(news.textNews ?? "")
                     .font(.system(size: 15))
                     .padding(10)
                 
+//                if let images = news.attachments {
+//                    ScrollView(.horizontal) {
+//                        LazyHGrid(rows: [layout]) {
+//                            ForEach(images) { image in
+//                                LazyView(createImage(image: image.photo?.sizes.last?.url))
+//                                    .scaledToFit()
+//                            }
+//                        }
+//                    }
+//                }
+                
                 //TODO: сделать грид фоток
-                createImage(image: "")
+                createImage(image: news.attachments?.first?.photo?.sizes.last?.url ?? "")
                     .frame(maxHeight: 300)
                     .scaledToFit()
             }
@@ -91,6 +106,7 @@ struct NewsCell: View {
                 .frame(maxHeight: 50)
             
             HStack {
+                //TODO: сделать подбор
                 Image(systemName: "plus")
                     .resizable()
                     .clipShape(Circle())
@@ -119,11 +135,5 @@ struct NewsCell: View {
                     .resizable()
             }
         }
-    }
-}
-
-struct NewsCell_Previews: PreviewProvider {
-    static var previews: some View {
-        NewsCell()
     }
 }

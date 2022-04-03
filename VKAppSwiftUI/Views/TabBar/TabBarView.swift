@@ -24,16 +24,19 @@ struct TabBarView: View {
     private let friendViewModel: FriendViewModel
     private let groupViewModel: GroupViewModel
     private let friendImageViewModel: FriendImageViewModel
+    private let newsViewModel: NewsViewModel
     
 //MARK: - Init
     init(selected: Tabs,
          friendViewModel: FriendViewModel,
          groupViewModel: GroupViewModel,
-         friendImageViewModel: FriendImageViewModel) {
+         friendImageViewModel: FriendImageViewModel,
+         newsViewModel: NewsViewModel) {
         self.friendViewModel = friendViewModel
         self.groupViewModel = groupViewModel
         self.selectedTab = selected
         self.friendImageViewModel = friendImageViewModel
+        self.newsViewModel = newsViewModel
         UITabBar.appearance().isHidden = true
     }
     
@@ -51,7 +54,7 @@ struct TabBarView: View {
 //MARK: - CreateTabView
     private func createTabView() -> some View {
         TabView(selection: $selectedTab) {
-            NewsView()
+            NewsView(viewModel: newsViewModel)
                 .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.news)
             FriendsView(viewModel: friendViewModel, friendImageViewModel: friendImageViewModel)

@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct NewsView: View {
+    @ObservedObject var viewModel: NewsViewModel
+    
     var body: some View {
-        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
+        List(viewModel.news) { item in
+            LazyView(NewsCell(news: item))
+        }
+        .onAppear {
+            viewModel.getNews()
+        }
     }
 }
 
 struct NewsView_Previews: PreviewProvider {
     static var previews: some View {
-        NewsView()
+        NewsView(viewModel: NewsViewModel(operation: NewsOperation()))
     }
 }

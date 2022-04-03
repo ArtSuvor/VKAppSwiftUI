@@ -17,7 +17,7 @@ enum GroupRouter: URLRequestConvertible {
     }
     
     private var url: URL {
-        return URL(string: "https://api.vk.com/method")!
+        URL(string: "https://api.vk.com/method")!
     }
     
     private var method: HTTPMethod {

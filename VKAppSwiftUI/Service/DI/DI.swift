@@ -12,7 +12,8 @@ final class DI {
         TabBarView(selected: .news,
                    friendViewModel: createFriendsViewModel(),
                    groupViewModel: createGroupsViewModel(),
-                   friendImageViewModel: createFriendImageViewModel())
+                   friendImageViewModel: createFriendImageViewModel(),
+                   newsViewModel: createNewsViewModel())
     }
     
     func createAuthView() -> VKLoginWebView {
@@ -42,5 +43,13 @@ final class DI {
     
     private func createGroupOperation() -> GroupOperation {
         GroupOperation(database: createDatabase())
+    }
+    
+    private func createNewsViewModel() -> NewsViewModel {
+        NewsViewModel(operation: createNewsOperation())
+    }
+    
+    private func createNewsOperation() -> NewsOperation {
+        NewsOperation()
     }
 }

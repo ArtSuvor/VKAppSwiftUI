@@ -14,6 +14,7 @@ struct NewsView: View {
         List(viewModel.news) { item in
             LazyView(NewsCell(news: item))
         }
+        .listStyle(.plain)
         .onAppear {
             viewModel.getNews()
         }

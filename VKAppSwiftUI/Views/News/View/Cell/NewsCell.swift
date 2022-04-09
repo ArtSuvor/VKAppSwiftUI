@@ -9,18 +9,18 @@ import SwiftUI
 import Kingfisher
 
 struct NewsCell: View {
-    private let layout = GridItem(.adaptive(minimum: screen.width / 2.4))
+    private let layout = GridItem(.adaptive(minimum: screen.width))
     var news: NewsModel
     
     var body: some View {
         VStack {
             createHeader()
-                .padding(.horizontal, 10)
             createBodyView()
-                .padding(.horizontal, 10)
             createFooter()
-                .padding(.horizontal, 10)
         }
+        .listRowInsets(EdgeInsets())
+        .listRowSeparator(.hidden)
+        .padding(10)
     }
     
 // MARK: FooterView
@@ -31,7 +31,6 @@ struct NewsCell: View {
                 Image(systemName: "plus")
             }
             .padding(5)
-            .padding(.horizontal, 10)
             .background(RoundedRectangle(cornerRadius: 5)
                 .foregroundColor(.gray))
             
@@ -40,7 +39,6 @@ struct NewsCell: View {
                 Image(systemName: "plus")
             }
             .padding(5)
-            .padding(.horizontal, 10)
             .background(RoundedRectangle(cornerRadius: 5)
                 .foregroundColor(.gray))
             
@@ -49,7 +47,6 @@ struct NewsCell: View {
                 Image(systemName: "plus")
             }
             .padding(5)
-            .padding(.horizontal, 10)
             .background(RoundedRectangle(cornerRadius: 5)
                 .foregroundColor(.gray))
             
@@ -60,7 +57,6 @@ struct NewsCell: View {
                 Text("\(news.viewsCount?.count ?? 0)")
             }
             .padding(5)
-            .padding(.horizontal, 10)
             .background(RoundedRectangle(cornerRadius: 5)
                 .foregroundColor(.gray))
             .foregroundColor(.white)
@@ -75,25 +71,29 @@ struct NewsCell: View {
                 .foregroundColor(Color("backColorNews"))
             
             VStack {
-                Text(news.textNews ?? "")
-                    .font(.system(size: 15))
-                    .padding(10)
+                if let text = news.textNews {
+                    Text(text)
+                        .font(.system(size: 15))
+                        .padding(10)
+                }
                 
-//                if let images = news.attachments {
-//                    ScrollView(.horizontal) {
-//                        LazyHGrid(rows: [layout]) {
-//                            ForEach(images) { image in
-//                                LazyView(createImage(image: image.photo?.sizes.last?.url))
-//                                    .scaledToFit()
-//                            }
-//                        }
-//                    }
-//                }
+                if let attachments = news.attachments {
+                    let images = attachments.compactMap { $0.photo }
+                    ScrollView(.horizontal) {
+                        LazyHGrid(rows: [layout]) {
+                            ForEach(images) { image in
+                                LazyView(createImage(image: image.sizes.last?.url))
+                                    .scaledToFit()
+                                    .frame(maxHeight: 400)
+                            }
+                        }
+                    }
+                }
                 
                 //TODO: сделать грид фоток
-                createImage(image: news.attachments?.first?.photo?.sizes.last?.url ?? "")
-                    .frame(maxHeight: 300)
-                    .scaledToFit()
+//                createImage(image: news.attachments?.first?.photo?.sizes.last?.url ?? "")
+//                    .frame(maxHeight: 300)
+//                    .scaledToFit()
             }
         }
     }
@@ -103,7 +103,7 @@ struct NewsCell: View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(.gray)
-                .frame(maxHeight: 50)
+                .frame(maxHeight: 40)
             
             HStack {
                 //TODO: сделать подбор
@@ -111,7 +111,7 @@ struct NewsCell: View {
                     .resizable()
                     .clipShape(Circle())
                     .shadow(color: .black, radius: 5)
-                    .frame(width: 40, height: 40)
+                    .frame(width: 30, height: 30)
                 
                 Text("Name")
                     .font(.title2.bold())

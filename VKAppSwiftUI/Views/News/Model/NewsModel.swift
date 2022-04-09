@@ -73,7 +73,8 @@ struct NewsModel: Codable, Identifiable {
 struct AttachmentsNews: Codable {
     let photo: ImageNews?
     
-    struct ImageNews: Codable {
+    struct ImageNews: Codable, Identifiable {
+        let id: Int
         let sizes: [ImageSize]
         
         struct ImageSize: Codable {

@@ -55,7 +55,6 @@ struct TabBarView: View {
     private func createTabView() -> some View {
         TabView(selection: $selectedTab) {
             NewsView(viewModel: newsViewModel)
-                .ignoresSafeArea(.all, edges: .all)
                 .tag(Tabs.news)
             FriendsView(viewModel: friendViewModel, friendImageViewModel: friendImageViewModel)
                 .ignoresSafeArea(.all, edges: .all)
